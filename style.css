@@ -1,0 +1,175 @@
+/* ========================================================
+                        Variáveis
+==========================================================*/
+:root {
+  /* Cores */
+  --bg-bottom: #e0dcd3; /* Cor de fundo da tela */
+  --paper-color: #fcfaf2; /* Cor da folha de papel */
+  --blue-line: #a2c4db; /* Cor das linhas pautadas */
+  --margin-line: #e8a2a2; /* Cor da margem vertical esquerda */
+  --text-color: #2b2b2b; /* Cor da "tinta" da caneta */
+  --link-color: #1a5fb4; /* Cor do link */
+  --link-hover: #dc2626; /* Cor do link ao passar o mouse */
+  --spiral-color: #888888; /* cor das argolas metálicas do caderno */
+
+  /* Tipogragia e Alinhamento */
+  --notebook-font: "Courier New", Courier, monospace; /* Fonte estilo manual */
+  --line-height: 2rem; /* Altura exata de cada linha */
+  --padding-side: 3rem; /* Espaço para não o texto com o espiral */
+}
+
+/* ========================================================
+                    Configurações Gerais    
+==========================================================*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  align-items: center;
+  background-color: var(--bg-bottom);
+  color: var(--text-color);
+  display: flex;
+  font-family: var(--notebook-font);
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* ========================================================
+                    Folha do Caderno   
+==========================================================*/
+.notebook-page {
+  background-color: var(--paper-color);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  min-height: 90vh;
+  padding: 3rem var(--padding-side) 3rem calc(var(--padding-side) + 1.5rem);
+  position: relative;
+  width: 100%;
+
+  /* Efeito das linhas pautadas horizontais */
+  background-image: linear-gradient(var(--blue-line) 1px, transparent 1px);
+  background-position: 0 1.5rem; /* Ajusa o início das linhas */
+  background-size: 100% var(--line-height);
+}
+
+/* Margem vertical vermelha do caderno */
+.notebook-page::before {
+  content: "";
+
+  background-color: var(--margin-line);
+  bottom: 0;
+  left: calc(var(--padding-side) + 0.5rem);
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 2px;
+}
+
+/* ========================================================
+                        Espiral
+==========================================================*/
+.binder-rings {
+  bottom: 0;
+  left: 10px;
+  opacity: 0.7;
+  position: absolute;
+  top: 2rem;
+  width: 25px;
+
+  /* Gerando várias argolas verticalmente ao longo da página */
+  background-image: linear-gradient(
+    to bottom,
+    var(--spiral-color) 0px,
+    var(--spiral-color) 10px,
+    transparent 10px,
+    transparent 40px
+  );
+  background-size: 20px 125px;
+}
+
+/* ========================================================
+                    Conteúdo & Alinhamento
+==========================================================*/
+.notebook-header {
+  margin-bottom: calc(var(--line-height) - 0.8rem);
+}
+
+.notebook-title {
+  font-size: 1.8rem;
+  line-height: calc(var(--line-height) * 2);
+  text-transform: uppercase;
+}
+
+.recipe-category {
+  margin-bottom: calc(var(--line-height) + 0.2rem);
+}
+
+.recipe-categoty h2 {
+  font-size: 1.2rem;
+  line-height: var(--line-height);
+  margin-bottom: 0;
+}
+
+.recipe-links {
+  list-style: none;
+}
+
+.recipe-links li {
+  height: var(--line-height);
+  line-height: var(--line-height);
+  overflow: hidden; /* Esconde o texto caso ele ultrapasse a largura da folha */
+  text-overflow: ellipsis; /* Adiciona "..." se o nome for grande demais para a linha */
+  white-space: nowrap; /* Impede que o texto quebre e vá para a linha de baixo */
+}
+
+.recipe-links a {
+  border-bottom: 1px dashed transparent;
+  color: var(--link-color);
+  display: inline-block;
+  max-width: 100%;
+  text-decoration: none;
+}
+
+.recipe-links a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.notebook-footer {
+  bottom: 2rem;
+  font-size: 0.85rem;
+  line-height: var(--line-height);
+  position: absolute;
+  right: var(--padding-side);
+}
+
+@media (max-width: 600px) {
+    :root {
+        --padding-side: 1.5rem;
+    }
+
+    body {
+        padding: 0;
+    }
+
+    .notebook-page {
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .binder-rings {
+        display: none;
+    }
+
+    .notebook-page::before {
+        left: calc(var(--padding-side) + 0.2rem);
+    }
+}
